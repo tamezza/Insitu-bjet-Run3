@@ -25,6 +25,9 @@ cd ..
 mkdir run
 cd run
 # Launch your favorite easyjet command
+lsetup pyamivms
+vms
+lsetup panda
 ```
 ### EasyJet Ntuples Production For b-jets In-situ Calibration Study
 
@@ -59,6 +62,62 @@ To:
       m_lrjetHandle{ this, "lrJets", "XbbCalibLRJets_%SYS%",   "Large-R jet container to read" };
 ```
 Also add `ATH_CHECK (m_jetHandle.initialize(m_systematicsList));` in `ZbbjCalibSelectorAlg.cxx`
+
+
+# Easyjet xbbcalib-ntupler Testing 
+
+Before submitting a job on the grid download a sample and test it locally, for that you need to
+
+```bash
+setupATLAS 
+lsetup rucio
+
+rucio list-dids "mc23_13p6TeV.700855.Sh_2214_Zbb_ptZ_200_ECMS.deriv.DAOD_PHYS.*"
+
+#list the differents files in the folder 
+rucio list-files mc23_13p6TeV.700855.Sh_2214_Zbb_ptZ_200_ECMS.deriv.DAOD_PHYS.e8582_s4369_r16083_p7017
+
+#Select once file and download it
+rucio download mc23_13p6TeV:DAOD_PHYS.45320357._000007.pool.root.1
+
+#run the job locally in lpnatlas:
+xbbcalib-ntupler DAOD_PHYS.45320357._000007.pool.root --run-config ../easyjet/XbbCalib/share/RunConfig_ZbbjCalib_run3.yaml --out-file calibration-vars.root
+
+#xbbcalib-ntupler mc23_13p6TeV.700855.Sh_2214_Zbb_ptZ_200_ECMS.deriv.DAOD_PHYS.e8514_s4159_r15224_p7017/DAOD_PHYS.46860364._000005.pool.root.1 --run-config ../easyjet/XbbCalib/share/RunConfig_ZbbjCalib_run3.yaml --out-file calibration-vars.root
+```
+If all fine and all the variables/informations are there, its time to lunch your jobs on the grid
+
+Hence, before submitting the jobs make sure to source easyjet and to make build if you made any modification on your codes than go to run and `lsetup pyamivms`, `vms`, `lsetup panda`
+
+```bash
+source ../easyjet/XbbCalib/scripts/grid/Zbbj_MC_run3.sh
+#source ../easyjet/XbbCalib/scripts/grid/Zbbj_data_run3.sh
+```
+
+If all works good you should see something kind of:
+
+```bash
+source ../easyjet/XbbCalib/scripts/grid/Zbbj_MC_run3.sh
+INFO : archiving source files with cpack
+INFO : the build directory is /data/atlas/tamezza/BJetCalib_Run3/easyjet_ntuples/Easyjet/build
+INFO : archiving source files
+INFO : archiving InstallArea
+INFO : gathering files under /data/atlas/tamezza/BJetCalib_Run3/easyjet_ntuples/Easyjet/run/./
+INFO : checking sandbox
+prun --inDS mc23_13p6TeV.700855.Sh_2214_Zbb_ptZ_200_ECMS.deriv.DAOD_PHYS.e8514_s4159_r15224_p7017 --outDS user.tamezza.bjes_26Nov2025.700855.e8514_s4159_r15224_p7017 --notExpandInDS --exec xbbcalib-ntupler %IN -l --run-config config.yaml --out-file output-tree.root --outputs TREE:output-tree.root --writeInputToTxt IN:in.txt --useAthenaPackages --destSE GRIF_LOCALGROUPDISK --nGBPerJob 30 --framework easyjet --athenaTag AthAnalysis,25.2.75 --inTarBall code.tar.gz
+INFO : upload sandbox
+INFO : submit user.tamezza.bjes_26Nov2025.700855.e8514_s4159_r15224_p7017/
+INFO : succeeded. new jediTaskID=47656196
+```
+
+
+
+
+
+
+
+
+
 
 
 
