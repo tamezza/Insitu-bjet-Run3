@@ -35,7 +35,6 @@ Go to Analysis Package for the *$Xbb$ Calibration* and do some modification to i
     - `Zbbj`: Lists of data and mc samples to process
 - `python/`: Main python code to configure the components (objects, selections as well as the variables to save)
   - `ZbbjCalib_config`
-  - `ZbbyCalib_config`
 - `scripts`
   - `grid`: Scripts for submitting grid jobs (used Zbbj_MC_run3.sh and Zbbj_data_run3.sh) 
 - `share/`: yaml files containing configurations used by the components
@@ -46,7 +45,20 @@ Go to Analysis Package for the *$Xbb$ Calibration* and do some modification to i
   - `ZbbjCalibSelectorAlg`: Find if the event pass the baseline selection for Zbbj calibration;
   - `BaselineVarsZbbjCalibAlg`: Compute the baseline variables for the Zbbj calibration.
 
+The `ZbbjCalibSelectorAlg.h` modified to add small-r jets handeling 
 
+```bash
+From:
+      m_lrjetHandle{ this, "largeRJets", "",   "Large-R jet container to read" };
+To:
+      CP::SysReadHandle<xAOD::JetContainer>
+      m_jetHandle{ this, "jets", "XbbCalibJets_%SYS%",   "Jet container to read" };
+
+      CP::SysReadHandle<xAOD::JetContainer>
+      //m_lrjetHandle{ this, "largeRJets", "",   "Large-R jet container to read" };
+      m_lrjetHandle{ this, "lrJets", "XbbCalibLRJets_%SYS%",   "Large-R jet container to read" };
+```
+Also add `ATH_CHECK (m_jetHandle.initialize(m_systematicsList));` in `ZbbjCalibSelectorAlg.cxx`
 
 
 
