@@ -110,6 +110,19 @@ INFO : submit user.tamezza.bjes_26Nov2025.700855.e8514_s4159_r15224_p7017/
 INFO : succeeded. new jediTaskID=47656196
 ```
 
+once the jobs are done in [PanDa](https://bigpanda.cern.ch/), check task ID and name you see the status of the jobs
+ 
+```bash
+
+#/data/atlas/tamezza/BJetCalib_Run3/easyjet_ntuples/samples_zbbj/Zbbj_bjes_27Nov2025
+setupATLAS
+lsetup rucio
+rucio list-dids "user.tamezza.bjes_27Nov2025.700855.%TREE"
+rucio list-dids "user.tamezza.bjes_27Nov2025.700855.%TREE" | awk '{print $2}' > list_zbbj.txt
+cat list_zbbj.txt
+vim list_zbbj.txt
+rucio download `cat list_zbbj.txt`
+```
 
 
 
