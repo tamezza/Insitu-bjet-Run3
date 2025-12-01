@@ -10,4 +10,6 @@ vim  zbbj_bjes_config.json
 
 run_bjes -c zbbj_bjes_config.json -i /data/atlas/tamezza/BJetCalib_Run3/easyjet_ntuples/samples_zbbj/Zbbj_bjes_27Nov2025 -o /data/atlas/tamezza/BJetCalib_Run3/JetCalibProcess/Zbbj/Zbbj_xbbCalib -n 10
 
+#Zbbj_xbbCalib_27Nov2025
+
 ``
