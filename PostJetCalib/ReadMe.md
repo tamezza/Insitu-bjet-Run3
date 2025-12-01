@@ -13,3 +13,9 @@ run_bjes -c zbbj_bjes_config.json -i /data/atlas/tamezza/BJetCalib_Run3/easyjet_
 #Zbbj_xbbCalib_27Nov2025
 
 ``
+Now its time to run insitu calib
+
+```bash
+#/data/atlas/tamezza/BJetCalib_Run3/BJetInsitu/Zbbj
+
+```
