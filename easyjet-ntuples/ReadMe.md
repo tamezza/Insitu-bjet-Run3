@@ -117,11 +117,24 @@ once the jobs are done in [PanDa](https://bigpanda.cern.ch/), check task ID and 
 #/data/atlas/tamezza/BJetCalib_Run3/easyjet_ntuples/samples_zbbj/Zbbj_bjes_27Nov2025
 setupATLAS
 lsetup rucio
+#MC Signal Zbbjets
 rucio list-dids "user.tamezza.bjes_27Nov2025.700855.%TREE"
 rucio list-dids "user.tamezza.bjes_27Nov2025.700855.%TREE" | awk '{print $2}' > list_zbbj.txt
 cat list_zbbj.txt
 vim list_zbbj.txt
 rucio download `cat list_zbbj.txt`
+
+#MC Background Dijets
+for i in {801165..801173}; do
+    echo "Processing sample ${i}..."
+    rucio list-dids "user.tamezza.bjes_27Nov2025.${i}.%TREE" | awk '{print $2}' > list_dijets.txt
+done
+#Or
+rucio list-dids "user.tamezza.bjes_27Nov2025.8011*.%TREE" | awk '{print $2}' > list_dijets.txt
+
+#Data
+rucio list-dids "user.tamezza.bjes_27Nov2025.data*.%TREE"
+rucio list-dids "user.tamezza.bjes_27Nov2025.data*.%TREE" | awk '{print $2}' > list_data.txt
 ```
 
 
